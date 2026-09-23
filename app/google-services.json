@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "377591737156",
+    "project_id": "aipulse-649bf",
+    "storage_bucket": "aipulse-649bf.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:377591737156:android:d434d9061a6e4b8dc6c511",
+        "android_client_info": {
+          "package_name": "com.infilabs.aipulse"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNNuaWXf8NznXaFjb7HwQnmMvsVmUXhGI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

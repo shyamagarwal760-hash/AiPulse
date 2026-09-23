@@ -3,16 +3,18 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
+
+    id("com.google.gms.google-services")
 }
 
 android {
-    namespace = "com.example.aipulse"
+    namespace = "com.infilabs.aipulse"
     compileSdk {
         version = release(37)
     }
 
     defaultConfig {
-        applicationId = "com.example.aipulse"
+        applicationId = "com.infilabs.aipulse"
         minSdk = 29
         targetSdk = 36
         versionCode = 1
@@ -94,4 +96,7 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
+
+    implementation(platform("com.google.firebase:firebase-bom:34.19.0"))
+    implementation("com.google.firebase:firebase-analytics")
 }
