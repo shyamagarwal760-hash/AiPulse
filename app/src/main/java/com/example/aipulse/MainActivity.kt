@@ -4,43 +4,49 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.aipulse.feature.article.presentation.ArticleSummaryViewModel
+import com.example.aipulse.feature.article.presentation.ArticleViewModel
+import com.example.aipulse.feature.auth.presentation.AuthMode
+import com.example.aipulse.feature.auth.presentation.AuthScreen
+import com.example.aipulse.feature.home.presentation.HomeScreen
+import com.example.aipulse.feature.source.presentation.SourceViewModel
 import com.example.aipulse.ui.theme.AIPulseTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             AIPulseTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
+                var showHome by remember { mutableStateOf(false) }
+                var authMode by remember { mutableStateOf(AuthMode.Login) }
+
+
+                    val articleViewModel: ArticleViewModel = hiltViewModel()
+                    val sourceViewModel: SourceViewModel = hiltViewModel()
+                    val summaryViewModel: ArticleSummaryViewModel = hiltViewModel()
+                    val articleUiState by articleViewModel.uiState.collectAsState()
+                    val sourceUiState by sourceViewModel.uiState.collectAsStateWithLifecycle()
+                    val summaryUiState by summaryViewModel.uiState.collectAsStateWithLifecycle()
+
+                    HomeScreen(
+                        articleUiState = articleUiState,
+                        sourceUiState = sourceUiState,
+                        summaryUiState = summaryUiState,
+                        onSummarizeClick = summaryViewModel::summarize,
+                        onDismissSummary = summaryViewModel::reset,
                     )
-                }
+
             }
         }
-    }
-}
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    AIPulseTheme {
-        Greeting("Android")
     }
 }
